@@ -1,0 +1,17 @@
+{
+    "extends": ["eslint:recommended", "plugin:node/recommended"],
+    "plugins": ["node"],
+    "parserOptions": {},
+    "env": {"node": true},
+    "globals": {
+      describe: true,
+      it: true
+    },
+    "rules": {
+      "node/no-unsupported-features": ["error", {"version": 4}],
+      "no-console": 0,
+      "func-names": 0,
+      "vars-on-top": 0,
+      "consistent-return": 0
+    }
+}

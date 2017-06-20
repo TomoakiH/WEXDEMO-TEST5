@@ -1,0 +1,58 @@
+{
+    "text_to_speech": [
+        {
+            "credentials": {
+                "url": "https://stream.watsonplatform.net/text-to-speech/api",
+                "password": "c2FY6LpwDhwW",
+                "username": "8297b6b3-6e7e-4b0d-b47d-1663d8df42f6"
+            },
+            "syslog_drain_url": null,
+            "label": "text_to_speech",
+            "provider": null,
+            "plan": "standard",
+            "name": "WEXDEMO-TTS",
+            "tags": [
+                "watson",
+                "ibm_created",
+                "ibm_dedicated_public"
+            ]
+        }
+    ],
+    "speech_to_text": [
+        {
+            "credentials": {
+                "url": "https://stream.watsonplatform.net/speech-to-text/api",
+                "password": "RVKphTUDVFxi",
+                "username": "fbf703c9-6d73-4cc4-8dc5-4144e6213a9a"
+            },
+            "syslog_drain_url": null,
+            "label": "speech_to_text",
+            "provider": null,
+            "plan": "standard",
+            "name": "WEXDEMO-STT",
+            "tags": [
+                "watson",
+                "ibm_created",
+                "ibm_dedicated_public"
+            ]
+        }
+    ],
+    "conversation": [
+        {
+            "credentials": {
+                "url": "https://gateway.watsonplatform.net/conversation/api",
+                "password": "UDnGTKduy6OG",
+                "username": "7e39776c-08dc-40ff-b561-9a6e8460a628"
+            },
+            "syslog_drain_url": null,
+            "label": "conversation",
+            "provider": null,
+            "plan": "standard",
+            "name": "WEXDEMO-Conversation",
+            "tags": [
+                "watson",
+                "ibm_created"
+            ]
+        }
+    ]
+}

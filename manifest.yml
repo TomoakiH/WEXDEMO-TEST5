@@ -1,0 +1,26 @@
+declared-services:
+  Text to Speech-yw:
+    label: text_to_speech
+    plan: standard
+  Speech To Text-g7:
+    label: speech_to_text
+    plan: standard
+  Conversation-x4:
+    label: Conversation
+    plan: free
+applications:
+- services:
+  - Text to Speech-yw
+  - Speech To Text-g7
+  - Conversation-x4
+  name: WEXDEMO-TEST5
+  host: WEXDEMO-TEST5
+  domain: eu-gb.mybluemix.net
+  command: node server.js
+  path: .
+  memory: 256M
+  instances: 1
+env:
+  LOG_LEVEL: "verbose"
+  NODE_ENV: "production"
+  DEBUG: "1"

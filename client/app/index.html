@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/bootstrap.css">
+  <link rel="stylesheet" href="styles/dialog.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="clientApp">
+  <!--[if lte IE 8]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <div class="header">
+    <div class=”row”>
+      <div class="navbar navbar-default" role="navigation">
+        <div class="col-sm-1 col-md-2 col-lg-2"></div>
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-8">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#/">Cognitive Field Worker</a>
+          </div>
+        </div>
+        <div class="col-sm-1 col-md-2 col-lg-2"></div>
+      </div>
+    </div>
+    <div class=”row”>
+      <div class="navbar navbar-2nd" role="navigation">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+        <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a ng-href="#/dialog">Cognitive Bot</a></li>
+              <li><a ng-href="#/search">Cognitive Search</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-2 col-lg-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view_body">
+    <div ng-view=""></div>
+  </div>
+
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+  !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+    (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+    r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+  }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
+  </script>
+
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/services/watson-speech.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/search.js"></script>
+  <script src="scripts/controllers/dialog.js"></script>
+  <script src="scripts/services/conversation.js"></script>
+  <script src="scripts/services/sharedService.js"></script>
+  <script src="scripts/services/extract.js"></script>
+  <script src="scripts/services/stt_tts.js"></script>
+  <!-- endbuild -->
+
+
+</body>
+</html>

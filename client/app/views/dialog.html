@@ -1,0 +1,79 @@
+<div class="dialog_body">
+	<div class="dialog_field">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1 col-sm-8 col-md-7 col-lg-6 ">
+				<ul>
+					<li ng-repeat="word in dialog.dialog_history"	style="list-style: none;">
+						<div class="row">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<div ng-if="word.speaker == 'watson'" class="image_watson"></div>
+							</div>
+							<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+								<p ng-if="word.textType"
+								class="well balloon_wrapper balloon_{{word.speaker}}"  ng-bind-html="word.text"></p>
+								<p ng-if="word.linkType"
+								class="well balloon_wrapper balloon_{{word.speaker}}">
+								{{word.text}} <a href="{{word.link}}" ng-if="word.linkType" target={{word.link_target}}>「{{word.link_text}}」へのリンク</a></p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="wexkeyword_footer footer  col-xs-3 col-sm-3 col-md-3 col-lg-3">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-responsive" style="margin:30px 0px">
+						<tr class="danger">
+							<th class="col-sm-2">検索</th>
+							<th class="col-sm-5">カテゴリ</th>
+							<th class="col-sm-5">内容</th>
+						</tr>
+
+						<tr class="warning  checker" ng-repeat="keyword in dialog.wexkeyword"	ng-class="{exclude: keyword.exclude}">
+									<td>
+									<label for="{{keyword.name_text}}">
+									<input type="checkbox" ng-model="keyword.exclude"id="{{keyword.name_text}}">
+									<span class="check" ng-model="keyword.exclude"></span>
+									</label>
+									</td>
+									<td><label for="{{keyword.name_text}}">{{keyword.name_text}}</label></td>
+						  			<td><label for="{{keyword.name_text}}">{{keyword.value}}</label></td>
+						</tr>
+
+						<tbody id="extractResults">
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<div id="dialog_bottom"></div>
+	</div>
+
+	<div class="dialog_footer footer">
+		<div class="row">
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				<center>
+					<button ng-click="dialog.startSTT();"  class="btn btn-warning">音声入力</button>
+					<input type="file" accept="image/*" capture="camera" id="file-image">
+					<button ng-click="dialog.startVR();"  class="btn btn-warning">画像入力テスト</button>
+				</center>
+			</div>
+			<form ng-submit="dialog.receiveUserText();">
+				<div class="col-xs-8 col-sm-7 col-md-6 col-lg-5">
+					<div class="form-group">
+						<input type="text" rows="1" id="user_text" class="form-control"
+						ng-model="dialog.user_text" required placeholder="質問を入力"></input>
+						<div id="input_example" class="animated input_example"
+						ng-if="dialog.input_example != ''" ng-bind="dialog.input_example"></div>
+					</div>
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<button type="submit" class="btn btn-primary">送信</button>
+				</div>
+			</form>
+
+
+		</div>
+	</div>
+</div>

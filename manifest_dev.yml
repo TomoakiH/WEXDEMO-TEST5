@@ -1,0 +1,25 @@
+declared-services:
+  WEX-DEMO-TTS:
+    label: text_to_speech
+    plan: standard
+  WEX-DEMO-STT:
+    label: speech_to_text
+    plan: standard
+  WEX-DEMO-Conversation:
+    label: Conversation
+    plan: free
+applications:
+- services:
+  - WEX-DEMO-TTS
+  - WEX-DEMO-STT
+  - WEX-DEMO-Conversation
+  name: WEX-DEMO-QA-KN
+  host: WEX-DEMO-QA-KN
+  domain: mybluemix.net
+  command: node server.js
+  path: .
+  memory: 256M
+  instances: 1
+env:
+  LOG_LEVEL: "verbose"
+  NODE_ENV: "development"

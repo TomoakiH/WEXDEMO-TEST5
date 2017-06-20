@@ -1,0 +1,104 @@
+<!-- <div class="container-fluid"> -->
+<div class="dialog_body">
+	<div class="dialog_field">
+		<div class="row">
+			<div class="row placeholders">
+
+				<div class="col-xs-8 col-xs-offset-1 col-sm-8 col-md-7 col-lg-6 ">
+					<div class="row">
+
+						<div class="col-xs-12">
+							<h4>事例検索についてコメントしてください</h4>
+							<div ng-bind-html="search.questions" style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+							</div>
+						</div>
+
+						<!-- Real-time extraction result -->
+						<!-- button id="extractButton" class="btn btn-primary" style="width:120pt" value="Start Extraction">Start Extraction</button -->
+						<div class="table-responsive col-xs-12">
+							<table class="table table-bordered table-striped table-hover">
+								<thead>
+									<tr class="success">
+										<th class="col-sm-1">検索</th>
+										<th class="col-sm-5">カテゴリー</th>
+										<th class="col-sm-5">キーワード</th>
+									</tr>
+									<form class="input-group input-group-lg">
+										<tr class="default checker" ng-repeat="hit in search.analysis_data"	ng-class="{exclude: hit.exclude}">
+											<td>
+											<label for="{{hit.name}}_{{hit.keyword}}">
+											<input type="checkbox" ng-model="hit.exclude"id="{{hit.name}}_{{hit.keyword}}">
+											<span class="check" ng-model="hit.exclude"></span>
+											</label>
+											</td>
+											<td><label for="{{hit.name}}_{{hit.keyword}}">{{hit.name}}</label></td>
+							  			<td><label for="{{hit.name}}_{{hit.keyword}}">{{hit.keyword}}</label></td>
+										</tr>
+									</form>
+								</thead>
+								<tbody id="extractResults">
+								</tbody>
+							</table>
+						</div>
+
+						<!-- Button to move to verify process -->
+						<button type="submit" class="btn btn-primary"	ng-disabled="analysis_check" ng-click="search.analyze();">分析開始</button>
+						<button type="submit" class="btn btn-default" ng-click="search.clearAnalyze();">結果のクリア</button>
+					</div>
+				</div>
+
+				<div class="wexkeyword_footer footer  col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-responsive" style="margin:30px 0px">
+							<tr class="danger">
+								<th class="col-sm-2">検索</th>
+								<th class="col-sm-5">カテゴリ</th>
+								<th class="col-sm-5">内容</th>
+							</tr>
+
+							<tr class="warning  checker" ng-repeat="keyword in search.wexkeyword"
+							ng-class="{exclude: keyword.exclude}">
+							<td>
+								<label for="{{keyword.name_text}}">
+									<input type="checkbox" ng-model="keyword.exclude"id="{{keyword.name_text}}">
+									<span class="check" ng-model="keyword.exclude"></span>
+								</label>
+							</td>
+							<td><label for="{{keyword.name_text}}">{{keyword.name_text}}</label></td>
+							<td><label for="{{keyword.name_text}}">{{keyword.value}}</label></td>
+						</tr>
+
+						<tbody id="extractResults">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="dialog_footer footer">
+		<div class="row">
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				<center>
+					<button ng-click="search.startSTT();"  class="btn btn-warning">音声入力</button>
+				</center>
+			</div>
+			<form ng-submit="search.feedbackQuestion();">
+				<div class="col-xs-8 col-sm-7 col-md-6 col-lg-5">
+					<div class="form-group">
+						<input type="text" rows="1" id="user_text" class="form-control"
+						ng-model="search.question" required placeholder="質問を入力"></input>
+						<div id="input_example" class="animated input_example"
+						ng-if="dialog.input_example != ''" ng-bind="dialog.input_example"></div>
+					</div>
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<button type="submit" class="btn btn-primary">送信</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</div>
+</div>

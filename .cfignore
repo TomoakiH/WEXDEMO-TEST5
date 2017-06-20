@@ -1,0 +1,8 @@
+.git
+node_modules
+.settings
+launchConfigurations
+client/.tmp
+client/app
+client/bower_components
+client/test
