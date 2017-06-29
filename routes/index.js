@@ -19,7 +19,6 @@ router.all('/api/speech-to-text/token', sttTts);
 router.all('/api/text-to-speech/token', sttTts);
 
 // VR
-// router.all('/api/vr', vR);
 router.post('/api/vr', vr.vr);
 
 module.exports = router;

@@ -8,7 +8,7 @@
 * Controller of the clientApp
 */
 angular.module('clientApp')
-.controller('DialogCtrl', ["conversation","sharedService", "sttTts",　"vr", "$window", "$timeout", "$uibModal", "$scope", function (conversation, sharedService, sttTts, vr, $window, $timeout, $uibModal, $scope) {
+.controller('DialogCtrl', ["conversation","sharedService", "sttTts", "vr", "$window", "$timeout", "$uibModal", "$scope", function (conversation, sharedService, sttTts, vr, $window, $timeout, $uibModal, $scope) {
 // .controller('DialogCtrl', ["conversation","sharedService", "sttTts", "$window", "$timeout", "$uibModal", "$scope", function (conversation, sharedService, sttTts, $window, $timeout, $uibModal, $scope) {
 	var self = this;
 	var context;
@@ -141,8 +141,9 @@ angular.module('clientApp')
 
 	this.startVR = function() {
 		console.log('start VR');
-		vr.startVR(function(err){
-			console.log('start dialogjs startVR');
+		vr.startVR(function(err, data){
+			console.log(data);
+			// console.log('start dialogjs startVR');
 		});
 	};
 		// var watson = require('watson-developer-cloud/visual-recognition/v3')

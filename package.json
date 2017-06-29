@@ -24,6 +24,8 @@
     "http-auth": "~2.4.4",
     "method-override": "2.3.0",
     "morgan": "^1.6.1",
+    "multer": "^1.3.0",
+    "muster": "^0.9.3",
     "request": "*",
     "serve-favicon": "^2.3.0",
     "underscore": "*",
