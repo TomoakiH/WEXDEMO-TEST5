@@ -7,15 +7,17 @@ exports.vr = function(req, res) {
 
   console.log("start VR");
   // console.log(req.body.file);
-  // console.log(req);
-  console.log(req.body);
-  // console.log(req.body.file);
+  console.log("req = " + req);
+  console.log("res.send = " + req.body);
+  console.log("req.body.file = " + req.body.file);
+  console.log("req.file = " + req.file);
   // console.log(req.body.filename);
   // for(r of req) {
   //   console.log(r);
   // }
   upload.single("file"),function(req,res,next){
       console.log(req.file);
+      res.send("Success");
   //req.fileにアップロードされたデータの情報が格納される。
   //req.bodyにはテキストデータが格納される。
   }

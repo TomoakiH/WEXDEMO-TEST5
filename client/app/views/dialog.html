@@ -56,30 +56,15 @@
 				<center>
 					<button ng-click="dialog.startSTT();"  class="btn btn-warning">音声入力</button>
 					<!-- <input type="file" accept="image/*" capture="camera" id="file-image" ng-file-select="fileSelect($files)"> -->
-					<!-- <button ng-click="dialog.startVR();"  class="btn btn-warning">画像入力テスト</button> -->
-					<!-- <form method="post" action="res.php" enctype="multipart/form-data">
-						ファイル:<input type="file" name="up_file"><br>
-						<input type="submit" value="upload">
-					</form> -->
-					<!-- <form method="post" action="example.cgi">
-
-						<p><input type="text" name="example" size="30"></p>
-
-						<p>
-							<input type="submit" value="送信する">
-							<input type="reset" value="リセット">
-						</p>
-
-					</form> -->
-					<form id="foo" enctype="multipart/form-data">
-    				<input id="file" name="file" type="file" />
-    				<input id="send" type="submit" />
-					</form>
+					<!-- <input type="file" accept="image/*" capture="camera" id="file-image"> -->
+					<input type="file" file-model="file">
+					<button ng-click="dialog.startVR();"  class="btn btn-warning">画像入力テスト</button>
+					<p>{{response}}</p>
 				</center>
 			</div>
 			<form ng-submit="dialog.receiveUserText();">
 				<div class="col-xs-8 col-sm-7 col-md-6 col-lg-5">
-					<div class="form-group">
+					<!-- <div class="form-group"> -->
 						<input type="text" rows="1" id="user_text" class="form-control"
 						ng-model="dialog.user_text" required placeholder="質問を入力"></input>
 						<div id="input_example" class="animated input_example"
@@ -94,28 +79,3 @@
 		</div>
 	</div>
 </div>
-<script>
-$(function(){
-    $('#foo').submit(function(){
-				// console.log("start ajax");
-				// console.log($('#foo').get()[0]);
-        var fd = new FormData($('#foo').get()[0]);
-				// console.log(fd);
-				for(item of fd) console.log(item);
-				// console.log(fd[0]);
-				console.log(fd[1]);
-        $.ajax({
-            url: "/api/vr",
-            type: "POST",
-            data: fd,
-            processData: false,
-            contentType: false
-            // dataType: 'json'
-        })
-        .done(function( data ) {
-            $('#result').text(data.width + "x" + data.height);
-        });
-        return false;
-    });
-});
-</script>

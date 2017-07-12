@@ -8,7 +8,7 @@
 * Controller of the clientApp
 */
 angular.module('clientApp')
-.controller('DialogCtrl', ["conversation","sharedService", "sttTts", "vr", "$window", "$timeout", "$uibModal", "$scope", function (conversation, sharedService, sttTts, vr, $window, $timeout, $uibModal, $scope) {
+.controller('DialogCtrl', ["conversation","sharedService", "sttTts", "vr", "$window", "$timeout", "$uibModal", "$scope", "$http", function (conversation, sharedService, sttTts, vr, $window, $timeout, $uibModal, $scope, $http) {
 // .controller('DialogCtrl', ["conversation","sharedService", "sttTts", "$window", "$timeout", "$uibModal", "$scope", function (conversation, sharedService, sttTts, $window, $timeout, $uibModal, $scope) {
 	var self = this;
 	var context;
@@ -140,50 +140,34 @@ angular.module('clientApp')
 	};
 
 	this.startVR = function() {
-		console.log('start VR');
-		vr.startVR(function(err, data){
-			console.log(data);
-			// console.log('start dialogjs startVR');
+		console.log('start VR controller');
+		//formdata
+		var fd = new FormData();
+		// fd.append('file',$scope.file);
+		fd.append('file',$('input[type=file]')[0].files[0]);
+		// fd.append('hoge', $('input[type=file]')[0].files[0]);
+
+		console.log($scope.file);
+		console.log($('input[type=file]')[0].files[0]);
+		//post
+		// TODO api_keyを初回起動時にBluemixの設定から取りに行く
+		$http.post('https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=baaae9310c92f4fabc9f24cd3fb7eaef809087d5&version=2016-05-20',fd,{
+				transformRequest: null,
+				headers: {'Content-type':undefined}
+		})
+		.success(function(res){
+				console.log("response is");
+				$scope.response = res;
+				// console.log(res);
+				console.log(res.body);
+				console.log(res.body.images[0].classifiers[0].classes[0].class);
 		});
+
+		// vr.startVR(function(err, data){
+		// 	console.log(data);
+		// 	// console.log('start dialogjs startVR');
+		// });
 	};
-		// var watson = require('watson-developer-cloud/visual-recognition/v3')
-		// var fs = require('fs');
-		//
-		// var visual_recognition = new VisualRecognitionV3({
-  	// 	api_key: 'baaae9310c92f4fabc9f24cd3fb7eaef809087d5',
-  	// 	version_date: VisualRecognitionV3.VERSION_DATE_2016_05_20
-		// });
-		//
-		// var params = {
-  	// 	images_file: fs.createReadStream('images.jpg')
-		// };
-		//
-		// visual_recognition.classify(params, function(err, res) {
-  	// 	if (err)
-    // 		console.log(err);
-  	// 	else
-    // 		console.log(JSON.stringify(res, null, 2));
-		// });
-
-		// $http({
-		// 	method: 'POST',
-		// 	// url: 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify',
-		// 	url: 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key={baaae9310c92f4fabc9f24cd3fb7eaef809087d5}&version=2016-05-20',
-		// 	headers: {'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8'},
-		// 	// data: { api_key: 'baaae9310c92f4fabc9f24cd3fb7eaef809087d5', version: '2016-05-20' }
-		// 	file: 'images.jpg'
-		// })
-		// .success(function(res){
-		// 	// $scope.result = data;
-		// 	console.log('nomal end');
-		// 	console.log(res);
-		// })
-		// .error(function(){
-		// 	// $scope.result = '通信失敗！';
-		// 	console.log('abnormal end');
-		// });
-	// };
-
 	// Modal 呼び出し サンプル　showModal($scope, $uibModal, modalHeader, modalMessage, modalFooter, DialogCtrl)
 	// showModal($scope, $uibModal, "機会番号の読み取り",
 	// "<div align=\"left\">専用バーコードで、機械番号を読み取ってください。</div></LEFT><CENTER><img src=\"images/watson_think.gif\" width=\"100\" height=\"100\"><BR>読み取り中</CENTER>",
