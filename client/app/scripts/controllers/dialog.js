@@ -9,7 +9,7 @@
 */
 angular.module('clientApp')
 .controller('DialogCtrl', ["conversation","sharedService", "sttTts", "vr", "$window", "$timeout", "$uibModal", "$scope", "$http", function (conversation, sharedService, sttTts, vr, $window, $timeout, $uibModal, $scope, $http) {
-// .controller('DialogCtrl', ["conversation","sharedService", "sttTts", "$window", "$timeout", "$uibModal", "$scope", function (conversation, sharedService, sttTts, $window, $timeout, $uibModal, $scope) {
+
 	var self = this;
 	var context;
 
@@ -25,7 +25,6 @@ angular.module('clientApp')
 	}
 
 	function updateContext(new_context){
-		//console.log(new_context);
 		context = angular.extend({},new_context);
 		if(new_context.client_action !== null){
 			context.client_action = null;
@@ -109,7 +108,6 @@ angular.module('clientApp')
 			}
 			scrollToBottom();
 		});
-
 	};
 	this.user_text = "";
 	this.input_example = "";
@@ -135,7 +133,7 @@ angular.module('clientApp')
 			if (err) {return console.log(err);}
 			console.log(startSTTText);
 			self.user_text = startSTTText;
-			self.receiveUserText();
+			self.receiveUserText(true);
 		});
 	};
 
@@ -143,12 +141,8 @@ angular.module('clientApp')
 		console.log('start VR controller');
 		//formdata
 		var fd = new FormData();
-		// fd.append('file',$scope.file);
 		fd.append('file',$('input[type=file]')[0].files[0]);
-		// fd.append('hoge', $('input[type=file]')[0].files[0]);
 
-		console.log($scope.file);
-		console.log($('input[type=file]')[0].files[0]);
 		//post
 		// TODO api_keyを初回起動時にBluemixの設定から取りに行く
 		$http.post('https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=baaae9310c92f4fabc9f24cd3fb7eaef809087d5&version=2016-05-20',fd,{
@@ -156,17 +150,10 @@ angular.module('clientApp')
 				headers: {'Content-type':undefined}
 		})
 		.success(function(res){
-				console.log("response is");
-				$scope.response = res;
-				// console.log(res);
-				console.log(res.body);
-				console.log(res.body.images[0].classifiers[0].classes[0].class);
+				var txt = res.images[0].classifiers[0].classes[0].class;
+				self.user_text = txt;
+				self.receiveUserText(false);
 		});
-
-		// vr.startVR(function(err, data){
-		// 	console.log(data);
-		// 	// console.log('start dialogjs startVR');
-		// });
 	};
 	// Modal 呼び出し サンプル　showModal($scope, $uibModal, modalHeader, modalMessage, modalFooter, DialogCtrl)
 	// showModal($scope, $uibModal, "機会番号の読み取り",

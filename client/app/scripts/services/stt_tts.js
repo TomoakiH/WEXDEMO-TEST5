@@ -1,5 +1,7 @@
 'use strict';
 
+// TODO メソッド削除　or コントローラーの処理を移管
+
 /**
  * @ngdoc service
  * @name clientApp.sttTts
@@ -122,7 +124,7 @@ angular.module('clientApp')
       if (tts_audio_Obj.src) {
         tts_audio_Obj.pause();
       }
-      
+
       try {
         if (getCachedToken("tts_token")) {
           tts_audio_Obj = WatsonSpeech.TextToSpeech.synthesize({

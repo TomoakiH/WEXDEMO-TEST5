@@ -55,11 +55,8 @@
 			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 				<center>
 					<button ng-click="dialog.startSTT();"  class="btn btn-warning">音声入力</button>
-					<!-- <input type="file" accept="image/*" capture="camera" id="file-image" ng-file-select="fileSelect($files)"> -->
-					<!-- <input type="file" accept="image/*" capture="camera" id="file-image"> -->
 					<input type="file" file-model="file">
-					<button ng-click="dialog.startVR();"  class="btn btn-warning">画像入力テスト</button>
-					<p>{{response}}</p>
+					<button ng-click="dialog.startVR();"  class="btn btn-warning">画像入力</button>
 				</center>
 			</div>
 			<form ng-submit="dialog.receiveUserText();">
