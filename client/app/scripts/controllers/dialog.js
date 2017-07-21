@@ -13,6 +13,26 @@ angular.module('clientApp')
 	var self = this;
 	var context;
 
+	//画像ファイルを読み取り画面に表示するためのwatch文
+	// $scope.$watch("file",function(file){
+	//
+	// 		$scope.srcUrl = undefined;
+	// 		//画像ファイルじゃなければ何もしない
+	// 		if(!file || !file.type.match("image.*")){
+	// 				return;
+	// 		}
+	// 		//new FileReader API
+	// 		var reader = new FileReader();
+	// 		//callback
+	// 		reader.onload １= function(){
+	// 				$scope.$apply(function(){
+	// 						$scope.srcUrl = reader.result;
+	// 				});
+	// 		};
+	// 		//read as url(reader.result = url)
+	// 		reader.readAsDataURL(file)
+	// });
+
 	this.wexkeyword = sharedService.getWexkeyword();
 
 	function isKeywordExists(array, keyword) {
@@ -41,6 +61,7 @@ angular.module('clientApp')
 
 		// search用にkeywordを共有領域に保存
 		sharedService.setWexkeyword(self.wexkeyword);
+
 	}
 
 	var example_timer = "end";
@@ -109,6 +130,13 @@ angular.module('clientApp')
 			scrollToBottom();
 		});
 	};
+
+
+	this.receiveUserImage = function(){
+		stopExampleTimer();
+		this.dialog_history.push({text: null, speaker: "user", textType: true});
+	};
+
 	this.user_text = "";
 	this.input_example = "";
 	this.dialog_history = [];
@@ -133,12 +161,36 @@ angular.module('clientApp')
 			if (err) {return console.log(err);}
 			console.log(startSTTText);
 			self.user_text = startSTTText;
-			self.receiveUserText(true);
+			self.receiveUserText();
 		});
 	};
 
 	this.startVR = function() {
 		console.log('start VR controller');
+
+		//画像プレビュー
+
+		$scope.srcUrl = undefined;
+		//画像ファイルじゃなければ何もしない
+		if(!file || !file.type.match("image.*")){
+				return;
+		}
+		//new FileReader API
+		var reader = new FileReader();
+		//callback
+		reader.onload = function(){
+				$scope.$apply(function(){
+						$scope.srcUrl = reader.result;
+				});
+		};
+		//read as url(reader.result = url)
+		reader.readAsDataURL(file)
+
+		//画像プレビュー
+
+
+		self.receiveUserImage();
+
 		//formdata
 		var fd = new FormData();
 		fd.append('file',$('input[type=file]')[0].files[0]);
@@ -152,7 +204,7 @@ angular.module('clientApp')
 		.success(function(res){
 				var txt = res.images[0].classifiers[0].classes[0].class;
 				self.user_text = txt;
-				self.receiveUserText(false);
+				self.receiveUserText();
 		});
 	};
 	// Modal 呼び出し サンプル　showModal($scope, $uibModal, modalHeader, modalMessage, modalFooter, DialogCtrl)
@@ -194,6 +246,20 @@ angular.module('clientApp')
 
 }]);
 
+angular.module('clientApp').directive("fileModel", ["$parse", function ($parse) {
+		console.log("start directive");
+    return {
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            element.bind("change", function () {
+                scope.$apply(function () {
+                    model.assign(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
 
 angular.module('clientApp').controller('ModalController', ['$scope', '$uibModalInstance',　'params', '$timeout',
 function($scope, $uibModalInstance, params, $timeout){

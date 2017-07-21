@@ -14,6 +14,7 @@
 								<p ng-if="word.linkType"
 								class="well balloon_wrapper balloon_{{word.speaker}}">
 								{{word.text}} <a href="{{word.link}}" ng-if="word.linkType" target={{word.link_target}}>「{{word.link_text}}」へのリンク</a></p>
+								<img ng-if="word.textType" ng-if="srcUrl" ng-src="{{srcUrl}}" style="max-width: 250px" align="right">
 							</div>
 						</div>
 					</li>
@@ -55,7 +56,7 @@
 			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 				<center>
 					<button ng-click="dialog.startSTT();"  class="btn btn-warning">音声入力</button>
-					<input type="file" file-model="file">
+					<input type="file" file-model="file" capture="camera" id="getfile">
 					<button ng-click="dialog.startVR();"  class="btn btn-warning">画像入力</button>
 				</center>
 			</div>
