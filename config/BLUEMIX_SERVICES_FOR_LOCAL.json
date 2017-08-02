@@ -54,5 +54,25 @@
                 "ibm_created"
             ]
         }
-    ]
+    ],
+    "watson_vision_combined": [
+        {
+          "credentials": {
+            "url": "https://gateway-a.watsonplatform.net/visual-recognition/api",
+            "note": "This is your previous free key. If you want a different one, please wait 24 hours after unbinding the key and try again.",
+            "api_key": "baaae9310c92f4fabc9f24cd3fb7eaef809087d5"
+          },
+          "syslog_drain_url": null,
+          "volume_mounts": [],
+          "label": "watson_vision_combined",
+          "provider": null,
+          "plan": "free",
+          "name": "Visual Recognition-pp",
+          "tags": [
+            "watson",
+            "ibm_created",
+            "ibm_dedicated_public"
+          ]
+        }
+      ]
 }

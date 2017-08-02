@@ -8,30 +8,10 @@
 * Controller of the clientApp
 */
 angular.module('clientApp')
-.controller('DialogCtrl', ["conversation","sharedService", "sttTts", "vr", "$window", "$timeout", "$uibModal", "$scope", "$http", function (conversation, sharedService, sttTts, vr, $window, $timeout, $uibModal, $scope, $http) {
+.controller('DialogCtrl', ["conversation","sharedService", "sttTts", "$window", "$timeout", "$uibModal", "$scope", "$http", function (conversation, sharedService, sttTts, $window, $timeout, $uibModal, $scope, $http) {
 
 	var self = this;
 	var context;
-
-	//画像ファイルを読み取り画面に表示するためのwatch文
-	// $scope.$watch("file",function(file){
-	//
-	// 		$scope.srcUrl = undefined;
-	// 		//画像ファイルじゃなければ何もしない
-	// 		if(!file || !file.type.match("image.*")){
-	// 				return;
-	// 		}
-	// 		//new FileReader API
-	// 		var reader = new FileReader();
-	// 		//callback
-	// 		reader.onload １= function(){
-	// 				$scope.$apply(function(){
-	// 						$scope.srcUrl = reader.result;
-	// 				});
-	// 		};
-	// 		//read as url(reader.result = url)
-	// 		reader.readAsDataURL(file)
-	// });
 
 	this.wexkeyword = sharedService.getWexkeyword();
 
@@ -131,12 +111,6 @@ angular.module('clientApp')
 		});
 	};
 
-
-	this.receiveUserImage = function(){
-		stopExampleTimer();
-		this.dialog_history.push({text: null, speaker: "user", textType: true});
-	};
-
 	this.user_text = "";
 	this.input_example = "";
 	this.dialog_history = [];
@@ -168,43 +142,40 @@ angular.module('clientApp')
 	this.startVR = function() {
 		console.log('start VR controller');
 
-		//画像プレビュー
-
+		//画像ファイルを画面に表示する
+		var tempFile = $('input[type=file]')[0].files[0];
 		$scope.srcUrl = undefined;
-		//画像ファイルじゃなければ何もしない
-		if(!file || !file.type.match("image.*")){
+		if(!tempFile || !tempFile.type.match("image.*")){
 				return;
 		}
-		//new FileReader API
 		var reader = new FileReader();
-		//callback
 		reader.onload = function(){
 				$scope.$apply(function(){
 						$scope.srcUrl = reader.result;
 				});
 		};
-		//read as url(reader.result = url)
-		reader.readAsDataURL(file)
+		reader.readAsDataURL(tempFile);
 
-		//画像プレビュー
-
-
-		self.receiveUserImage();
-
-		//formdata
-		var fd = new FormData();
-		fd.append('file',$('input[type=file]')[0].files[0]);
-
-		//post
-		// TODO api_keyを初回起動時にBluemixの設定から取りに行く
-		$http.post('https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=baaae9310c92f4fabc9f24cd3fb7eaef809087d5&version=2016-05-20',fd,{
+		// サーバからVisualRecognitionの設定情報を取得後、
+		// VisualRecognitionに画像データをPost、
+		// レスポンスを元にreceiveUserText()を呼ぶ
+		fetch('/api/getVrSettings', {
+			credentials: 'include'//認証情報（Cookie)をFetchに乗せるには、    credentials: 'include'  が必要
+		}).then(function (response) {
+			console.log("response =" + response);
+			return response.json();
+		}).then(function (conf) {
+			var postUrl = conf.url + '/' + conf.version + '/classify?api_key=' + conf.api_key + "&version=2016-05-20"
+			var fd = new FormData();
+			fd.append('file',$('input[type=file]')[0].files[0]);
+			$http.post(postUrl,fd,{
 				transformRequest: null,
 				headers: {'Content-type':undefined}
-		})
-		.success(function(res){
+			}).success(function(res){
 				var txt = res.images[0].classifiers[0].classes[0].class;
 				self.user_text = txt;
 				self.receiveUserText();
+			})
 		});
 	};
 	// Modal 呼び出し サンプル　showModal($scope, $uibModal, modalHeader, modalMessage, modalFooter, DialogCtrl)
@@ -260,6 +231,24 @@ angular.module('clientApp').directive("fileModel", ["$parse", function ($parse) 
         }
     };
 }]);
+
+
+angular.module('clientApp').filter('hoge', function() {
+    return function(items) {
+        var result = [];
+        var preItem;
+
+        angular.forEach(items, function(item){
+            if(preItem && preItem.created_at == item.created_at){
+                return;
+            }
+            result.push(item);
+            preItem = item;
+        });
+
+        return result;
+    };
+});
 
 angular.module('clientApp').controller('ModalController', ['$scope', '$uibModalInstance',　'params', '$timeout',
 function($scope, $uibModalInstance, params, $timeout){

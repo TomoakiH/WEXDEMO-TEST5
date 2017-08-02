@@ -8,17 +8,21 @@ declared-services:
   Conversation-x4:
     label: Conversation
     plan: free
+  Visual Recognition-pp:
+      label: visual_recognition
+      plan: standard
 applications:
 - services:
   - Text to Speech-yw
   - Speech To Text-g7
   - Conversation-x4
+  - Visual Recognition-pp
   name: WEXDEMO-TEST5
   host: WEXDEMO-TEST5
   domain: eu-gb.mybluemix.net
   command: node server.js
   path: .
-  memory: 256M
+  memory: 512M
   instances: 1
 env:
   LOG_LEVEL: "verbose"

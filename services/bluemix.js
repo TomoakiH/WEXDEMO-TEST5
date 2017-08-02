@@ -25,7 +25,8 @@ module.exports.getServiceCreds = function(name) {
                     username: service.credentials.username,
                     password: service.credentials.password,
                     host: service.credentials.host,
-                    port: service.credentials.port
+                    port: service.credentials.port,
+                    api_key: service.credentials.api_key
                 };
             }
         }

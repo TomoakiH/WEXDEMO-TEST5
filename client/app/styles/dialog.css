@@ -15,6 +15,12 @@ div.wexkeyword_footer {
 	right:0px;
 }
 
+div.image_footer {
+	position: fixed;
+	bottom: 150px;
+	right:0px;
+}
+
 body {
 	background: url("../images/background_driving.png") fixed no-repeat;
 	background-attachment: fixed;
